@@ -88,7 +88,7 @@ static string produceWhere()
 		next_table = Console.ReadLine();
 		if(next_table == "-1")
 		{
-			return final = final + select_table;
+			return final = final + select_where;
 		}
 
 		Console.WriteLine("Please enter the equality you would like to use for this clause.");
