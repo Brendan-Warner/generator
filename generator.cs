@@ -120,11 +120,101 @@ static string produceWhere()
 	}
 	return select_where = " ";
 }
+	
+public static string groupBy()
+    {
+        string groupBy = " ";
+        string nextGroupBy = " ";
+        bool cont = true;
+        string final = "group by";
+        
+        while(cont)
+        {
+            Console.WriteLine("Please input what selected column you are grouping by, enter -1 to stop including groupbys");
+            nextGroupBy = Console.ReadLine();
+            
+            if(nextGroupBy != "-1")
+            {
+                groupBy = groupBy + nextGroupBy + ", ";
+            }
+            else if(groupBy != " ")
+            {
+                cont = false;
+            }
+            else
+            {
+                Console.WriteLine("You must include something for the group by");
+            }
+        }
+        final = final + groupBy;
+        
+        return final = final.Substring(0, final.Length - 2);
+    }
+    
+    public static string havingFun()
+    {
+        string having = " ";
+        string nextHaving = " ";
+        bool cont = true;
+        string final = " having";
+        int selection = 0;
+        string[] aggragetes = {"count", "min", "max", "avg","sum"};
+        string[] equalities = {">","<",">=","<=","=="};
+        while(cont)
+        {
+            Console.WriteLine("please input the having clause you are using for your agraget functions, enter -1 to stop including havine clauses");
+            nextHaving = Console.ReadLine();
+            
+            if(nextHaving != "-1")
+            {
+                Console.WriteLine("What aggragate function did you use? enter a number to select from the functions above.");
+                
+                selection = Convert.ToInt32(Console.ReadLine());
+                
+                if(selection > 4 || selection < 0)
+                {
+                    Console.WriteLine("That is not a valid choice, please try again");
+                }
+                
+                nextHaving = aggragetes[selection-1] +"("+nextHaving + ")";
+                
+                
+                Console.WriteLine("What equality would you like to use for this function? select from these options.");
+                
+                selection = Convert.ToInt32(Console.ReadLine());
+                
+                if(selection > 4 || selection < 0)
+                {
+                    Console.WriteLine("That is not a valid choice, please try again");
+                }
+                
+                nextHaving = nextHaving +  " "+ equalities[selection - 1] ;
+                
+                Console.WriteLine("Please input a number to compare to.");
+                
+                selection = Convert.ToInt32(Console.ReadLine());
+                
+                nextHaving = nextHaving + " " + selection.ToString() + ", ";
+                
+                having = having + nextHaving;
+            }
+            
+            else if(having != " ")
+            {
+                cont = false;
+            }
+            
+        }
+        final = final + having;
+        return final = final.Substring(0, final.Length -2);
+    }
   static void Main() {
       string query = " ";
       query = produceSelect();
       query = query +"\n";
       query = query + produceTable() + "\n";
+      query = query + havingFun() + "\n";
+      query = query + grouBy() + "\n";
       Console.WriteLine(query);
   }
 }
